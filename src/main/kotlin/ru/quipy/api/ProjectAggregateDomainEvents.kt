@@ -5,51 +5,58 @@ import ru.quipy.domain.Event
 import java.util.*
 
 const val PROJECT_CREATED_EVENT = "PROJECT_CREATED_EVENT"
-const val TAG_CREATED_EVENT = "TAG_CREATED_EVENT"
-const val TAG_ASSIGNED_TO_TASK_EVENT = "TAG_ASSIGNED_TO_TASK_EVENT"
-const val TASK_CREATED_EVENT = "TASK_CREATED_EVENT"
+const val UPDATE_PROJECT_INFO_EVENT = "UPDATE_PROJECT_INFO_EVENT"
+const val ADD_USER_EVENT = "ADD_USER_EVENT"
+const val ADD_TASK_EVENT = "ADD_TASK_EVENT"
+const val TASK_DELETED_EVENT = "TASK_DELETED_EVENT"
 
 // API
 @DomainEvent(name = PROJECT_CREATED_EVENT)
 class ProjectCreatedEvent(
     val projectId: UUID,
     val title: String,
-    val creatorId: String,
     createdAt: Long = System.currentTimeMillis(),
 ) : Event<ProjectAggregate>(
     name = PROJECT_CREATED_EVENT,
     createdAt = createdAt,
 )
 
-@DomainEvent(name = TAG_CREATED_EVENT)
-class TagCreatedEvent(
+@DomainEvent(name = UPDATE_PROJECT_INFO_EVENT)
+class UpdateProjectInfoEvent(
     val projectId: UUID,
-    val tagId: UUID,
-    val tagName: String,
+    val title: String,
     createdAt: Long = System.currentTimeMillis(),
 ) : Event<ProjectAggregate>(
-    name = TAG_CREATED_EVENT,
+    name = UPDATE_PROJECT_INFO_EVENT,
     createdAt = createdAt,
 )
 
-@DomainEvent(name = TASK_CREATED_EVENT)
-class TaskCreatedEvent(
+@DomainEvent(name = ADD_USER_EVENT)
+class UserAddedEvent(
     val projectId: UUID,
-    val taskId: UUID,
-    val taskName: String,
+    val userId: UUID,
     createdAt: Long = System.currentTimeMillis(),
 ) : Event<ProjectAggregate>(
-    name = TASK_CREATED_EVENT,
+    name = ADD_USER_EVENT,
+    createdAt = createdAt,
+)
+
+@DomainEvent(name = ADD_TASK_EVENT)
+class TaskAddedEvent(
+    val projectId: UUID,
+    val taskId: UUID,
+    createdAt: Long = System.currentTimeMillis(),
+) : Event<ProjectAggregate>(
+    name = ADD_TASK_EVENT,
     createdAt = createdAt
 )
 
-@DomainEvent(name = TAG_ASSIGNED_TO_TASK_EVENT)
-class TagAssignedToTaskEvent(
+@DomainEvent(name = TASK_DELETED_EVENT)
+class TaskDeletedEvent(
     val projectId: UUID,
     val taskId: UUID,
-    val tagId: UUID,
     createdAt: Long = System.currentTimeMillis(),
 ) : Event<ProjectAggregate>(
-    name = TAG_ASSIGNED_TO_TASK_EVENT,
+    name = TASK_DELETED_EVENT,
     createdAt = createdAt
 )
