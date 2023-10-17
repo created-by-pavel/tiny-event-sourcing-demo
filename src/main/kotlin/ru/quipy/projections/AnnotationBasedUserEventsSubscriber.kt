@@ -18,6 +18,6 @@ class AnnotationBasedUserEventsSubscriber {
 
     @SubscribeEvent
     fun userCreatedSubscriber(event: UserCreatedEvent) {
-        logger.info("User created: {}", event.userName)
+        logger.info("User created: {}", event.userInfo.name)
     }
 }

@@ -12,7 +12,7 @@ fun TaskAggregateState.create(title: String, description: String, projectId: UUI
         taskId = UUID.randomUUID(),
         title = title,
         description = description,
-        projectId = projectId,
+        projectId = projectId
     )
 }
 
@@ -30,8 +30,4 @@ fun TaskAggregateState.delExecutor(executor: UUID): DelTaskExecutorEvent {
 
 fun TaskAggregateState.changeStatus(status: Status): ChangeTaskStatusEvent {
     return ChangeTaskStatusEvent(taskId = this.getId(), status = status)
-}
-
-fun TaskAggregateState.deleteTask(): DeleteTaskEvent {
-    return DeleteTaskEvent(taskId = this.getId())
 }

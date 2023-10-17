@@ -27,7 +27,7 @@ class TaskAggregateState : AggregateState<UUID, TaskAggregate> {
         projectId = event.projectId
         createdAt = event.createdAt
         updatedAt = createdAt
-        status = Status.CREATED
+        status = Status(Status.DEFAULT_TASK_STATUS_ID, Status.DEFAULT_TASK_STATUS_NAME, Status.DEFAULT_TASK_STATUS_COLOR)
     }
 
     @StateTransitionFunc
@@ -54,17 +54,19 @@ class TaskAggregateState : AggregateState<UUID, TaskAggregate> {
         status = event.status
         updatedAt = event.createdAt
     }
+}
 
-    @StateTransitionFunc
-    fun deleteTaskApply(event: DeleteTaskEvent) {
-        status = Status.DELETED
-        updatedAt = event.createdAt
+data class Status(
+    val id: UUID,
+    val statusType: StatusType,
+    val color: StatusColor
+) {
+    companion object {
+        val DEFAULT_TASK_STATUS_ID: UUID = UUID.randomUUID();
+        val DEFAULT_TASK_STATUS_NAME = StatusType.CREATED
+        val DEFAULT_TASK_STATUS_COLOR = StatusColor.WHITE
     }
 }
 
-enum class Status {
-    CREATED,
-    IN_PROGRESS,
-    COMPLETED,
-    DELETED
-}
+enum class StatusType { CREATED, IN_PROGRESS, COMPLETED, DELETED }
+enum class StatusColor { WHITE, BLUE, GREEN, RED }

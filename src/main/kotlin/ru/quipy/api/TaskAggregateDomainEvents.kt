@@ -2,7 +2,7 @@ package ru.quipy.api
 
 import ru.quipy.core.annotations.DomainEvent
 import ru.quipy.domain.Event
-import ru.quipy.logic.task.Status
+import ru.quipy.logic.Status
 import java.util.*
 
 const val TASK_CREATED_EVENT = "TASK_CREATED_EVENT"
@@ -10,7 +10,6 @@ const val UPDATE_TASKS_INFO_EVENT = "UPDATE_TASKS_INFO_EVENT"
 const val ADD_TASKS_EXECUTOR_EVENT = "ADD_TASKS_EXECUTOR_EVENT"
 const val DEL_TASK_EXECUTOR_EVENT = "DEL_TASK_EXECUTOR_EVENT"
 const val CHANGE_TASK_STATUS_EVENT = "CHANGE_TASK_STATUS_EVENT"
-const val DELETE_TASK_EVENT = "DELETE_TASK_EVENT"
 
 // API
 
@@ -64,14 +63,5 @@ class ChangeTaskStatusEvent(
     createdAt: Long = System.currentTimeMillis(),
 ) : Event<TaskAggregate>(
     name = CHANGE_TASK_STATUS_EVENT,
-    createdAt = createdAt
-)
-
-@DomainEvent(name = DELETE_TASK_EVENT)
-class DeleteTaskEvent(
-    val taskId: UUID,
-    createdAt: Long = System.currentTimeMillis(),
-) : Event<TaskAggregate>(
-    name = DELETE_TASK_EVENT,
     createdAt = createdAt
 )

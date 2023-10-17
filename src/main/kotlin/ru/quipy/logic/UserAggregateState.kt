@@ -9,7 +9,7 @@ import java.util.*
 class UserAggregateState : AggregateState<UUID, UserAggregate> {
 
     private lateinit var userId: UUID
-    private lateinit var userName: String
+    private lateinit var userInfo: UserInfo
     private lateinit var userNickName: String
 
     override fun getId(): UUID = userId
@@ -17,9 +17,14 @@ class UserAggregateState : AggregateState<UUID, UserAggregate> {
     @StateTransitionFunc
     fun createUser(event: UserCreatedEvent) {
         userId = event.userId
-        userName = event.userName
+        userInfo = event.userInfo
         userNickName = event.nickName
     }
 }
+
+data class UserInfo (
+    val name: String,
+    val secondName: String
+)
 
 
