@@ -57,12 +57,12 @@ class TaskAggregateState : AggregateState<UUID, TaskAggregate> {
 }
 
 data class Status(
-    val id: UUID,
+    val id: Int,
     val statusType: StatusType,
     val color: StatusColor
 ) {
     companion object {
-        val DEFAULT_TASK_STATUS_ID: UUID = UUID.randomUUID();
+        val DEFAULT_TASK_STATUS_ID = StatusType.CREATED.ordinal
         val DEFAULT_TASK_STATUS_NAME = StatusType.CREATED
         val DEFAULT_TASK_STATUS_COLOR = StatusColor.WHITE
     }

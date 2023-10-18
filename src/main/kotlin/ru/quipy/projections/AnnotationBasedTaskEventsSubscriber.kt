@@ -32,6 +32,6 @@ class AnnotationBasedTaskEventsSubscriber {
 
     @SubscribeEvent
     fun taskStatusChangedSubscriber(event: ChangeTaskStatusEvent) {
-        logger.info("Task has changed Status: name:{}", event.status.statusName)
+        logger.info("Task has changed Status: name:{}", event.status.statusType)
     }
 }

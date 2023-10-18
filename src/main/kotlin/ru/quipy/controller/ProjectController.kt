@@ -25,7 +25,7 @@ class ProjectController(
     }
 
     @PutMapping("/{projectId}/info")
-    fun updateTask(@PathVariable projectId: UUID, @RequestParam projectTitle: String) : UpdateProjectInfoEvent {
+    fun updateInfo(@PathVariable projectId: UUID, @RequestParam projectTitle: String) : UpdateProjectInfoEvent {
         return projectEsService.update(projectId) { it.updateInfo(projectTitle) }
     }
 
