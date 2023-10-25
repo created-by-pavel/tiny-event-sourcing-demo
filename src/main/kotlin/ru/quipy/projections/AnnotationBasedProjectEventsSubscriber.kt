@@ -5,8 +5,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import ru.quipy.api.ProjectAggregate
 import ru.quipy.api.ProjectCreatedEvent
-import ru.quipy.api.TaskCreatedEvent
-import ru.quipy.api.UserAddedEvent
+import ru.quipy.api.UserJoinedToProjectEvent
 import ru.quipy.streams.annotation.AggregateSubscriber
 import ru.quipy.streams.annotation.SubscribeEvent
 
@@ -20,11 +19,11 @@ class AnnotationBasedProjectEventsSubscriber {
 
     @SubscribeEvent
     fun projectCreatedSubscriber(event: ProjectCreatedEvent) {
-        logger.info("Project created: {}", event.title)
+        logger.info("Project created: {}", event.projectTitle)
     }
 
     @SubscribeEvent
-    fun memberAddedSubscriber(event: UserAddedEvent) {
+    fun memberAddedSubscriber(event: UserJoinedToProjectEvent) {
         logger.info("Another member has added: id={}", event.userId)
     }
 }

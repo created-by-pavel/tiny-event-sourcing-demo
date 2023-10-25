@@ -2,66 +2,59 @@ package ru.quipy.api
 
 import ru.quipy.core.annotations.DomainEvent
 import ru.quipy.domain.Event
-import ru.quipy.logic.Status
-import java.util.*
+import java.util.UUID
 
-const val TASK_CREATED_EVENT = "TASK_CREATED_EVENT"
-const val UPDATE_TASKS_INFO_EVENT = "UPDATE_TASKS_INFO_EVENT"
-const val ADD_TASKS_EXECUTOR_EVENT = "ADD_TASKS_EXECUTOR_EVENT"
-const val DEL_TASK_EXECUTOR_EVENT = "DEL_TASK_EXECUTOR_EVENT"
-const val CHANGE_TASK_STATUS_EVENT = "CHANGE_TASK_STATUS_EVENT"
-
-// API
+private const val TASK_CREATED_EVENT = "TASK_CREATED_EVENT"
+private const val TASK_ASSIGNED_EVENT = "TASK_ASSIGNED_EVENT"
+private const val TASK_UNASSIGNED_EVENT = "TASK_UNASSIGNED_EVENT"
+private const val TASK_INFO_UPDATED_EVENT = "TASK_INFO_UPDATED_EVENT"
+private const val TASK_STATUS_UPDATED_EVENT = "TASK_STATUS_UPDATED_EVENT"
 
 @DomainEvent(name = TASK_CREATED_EVENT)
 class TaskCreatedEvent(
     val taskId: UUID,
-    val title: String,
-    val description: String,
     val projectId: UUID,
-    createdAt: Long = System.currentTimeMillis(),
+    val taskStatusId: UUID,
+    val taskTitle: String,
+    val taskDescription: String
 ) : Event<TaskAggregate>(
     name = TASK_CREATED_EVENT,
-    createdAt = createdAt
+    createdAt = System.currentTimeMillis(),
 )
 
-@DomainEvent(name = UPDATE_TASKS_INFO_EVENT)
-class UpdateTasksInfoEvent(
+@DomainEvent(name = TASK_ASSIGNED_EVENT)
+class TaskAssignedEvent(
     val taskId: UUID,
-    val title: String,
-    val description: String,
-    createdAt: Long = System.currentTimeMillis(),
+    val userId: UUID,
 ) : Event<TaskAggregate>(
-    name = UPDATE_TASKS_INFO_EVENT,
-    createdAt = createdAt
+    name = TASK_ASSIGNED_EVENT,
+    createdAt = System.currentTimeMillis()
 )
 
-@DomainEvent(name = ADD_TASKS_EXECUTOR_EVENT)
-class AddTaskExecutorEvent(
+@DomainEvent(name = TASK_UNASSIGNED_EVENT)
+class TaskUnassignedEvent(
     val taskId: UUID,
-    val executor: UUID,
-    createdAt: Long = System.currentTimeMillis(),
+    val userId: UUID,
 ) : Event<TaskAggregate>(
-    name = ADD_TASKS_EXECUTOR_EVENT,
-    createdAt = createdAt
+    name = TASK_UNASSIGNED_EVENT,
+    createdAt = System.currentTimeMillis()
 )
 
-@DomainEvent(name = DEL_TASK_EXECUTOR_EVENT)
-class DelTaskExecutorEvent(
+@DomainEvent(name = TASK_INFO_UPDATED_EVENT)
+class TaskInfoUpdatedEvent(
     val taskId: UUID,
-    val executor: UUID,
-    createdAt: Long = System.currentTimeMillis(),
+    val newTitle: String,
+    val newDescription: String
 ) : Event<TaskAggregate>(
-    name = DEL_TASK_EXECUTOR_EVENT,
-    createdAt = createdAt
+    name = TASK_INFO_UPDATED_EVENT,
+    createdAt = System.currentTimeMillis()
 )
 
-@DomainEvent(name = CHANGE_TASK_STATUS_EVENT)
-class ChangeTaskStatusEvent(
+@DomainEvent(name = TASK_STATUS_UPDATED_EVENT)
+class TaskStatusUpdatedEvent(
     val taskId: UUID,
-    val status: Status,
-    createdAt: Long = System.currentTimeMillis(),
+    val newTaskStatusId: UUID
 ) : Event<TaskAggregate>(
-    name = CHANGE_TASK_STATUS_EVENT,
-    createdAt = createdAt
+    name = TASK_STATUS_UPDATED_EVENT,
+    createdAt = System.currentTimeMillis()
 )

@@ -21,7 +21,7 @@ class ProjectEventsSubscriber {
         subscriptionsManager.createSubscriber(TaskAggregate::class, "some-meaningful-name") {
 
             `when`(TaskCreatedEvent::class) { event ->
-                logger.info("Task created: {}", event.title)
+                logger.info("Task created: {}", event.taskTitle)
             }
         }
     }

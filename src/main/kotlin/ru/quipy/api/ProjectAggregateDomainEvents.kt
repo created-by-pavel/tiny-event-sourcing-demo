@@ -2,61 +2,70 @@ package ru.quipy.api
 
 import ru.quipy.core.annotations.DomainEvent
 import ru.quipy.domain.Event
+import ru.quipy.logic.state.TaskStatusEntity
 import java.util.*
 
-const val PROJECT_CREATED_EVENT = "PROJECT_CREATED_EVENT"
-const val UPDATE_PROJECT_INFO_EVENT = "UPDATE_PROJECT_INFO_EVENT"
-const val ADD_USER_EVENT = "ADD_USER_EVENT"
-const val ADD_TASK_EVENT = "ADD_TASK_EVENT"
-const val TASK_DELETED_EVENT = "TASK_DELETED_EVENT"
+private const val PROJECT_CREATED_EVENT = "PROJECT_CREATED_EVENT"
+private const val PROJECT_INFO_UPDATED_EVENT = "PROJECT_INFO_UPDATED_EVENT"
+private const val USER_JOINED_TO_PROJECT_EVENT = "USER_JOINED_TO_PROJECT_EVENT"
+private const val USER_LEFT_PROJECT_EVENT = "USER_LEFT_FROM_PROJECT_EVENT"
+private const val TASK_STATUS_CREATED_EVENT = "TASK_STATUS_CREATED_EVENT"
+private const val TASK_STATUS_DELETED_EVENT = "TASK_STATUS_DELETED_EVENT"
 
 // API
 @DomainEvent(name = PROJECT_CREATED_EVENT)
 class ProjectCreatedEvent(
     val projectId: UUID,
-    val title: String,
-    createdAt: Long = System.currentTimeMillis(),
+    val projectTitle: String,
+    val defaultTaskStatusEntity: TaskStatusEntity
 ) : Event<ProjectAggregate>(
     name = PROJECT_CREATED_EVENT,
-    createdAt = createdAt,
+    createdAt = System.currentTimeMillis(),
 )
 
-@DomainEvent(name = UPDATE_PROJECT_INFO_EVENT)
-class UpdateProjectInfoEvent(
+@DomainEvent(name = PROJECT_INFO_UPDATED_EVENT)
+class ProjectInfoUpdatedEvent(
     val projectId: UUID,
-    val title: String,
-    createdAt: Long = System.currentTimeMillis(),
+    val newTitle: String,
 ) : Event<ProjectAggregate>(
-    name = UPDATE_PROJECT_INFO_EVENT,
-    createdAt = createdAt,
+    name = PROJECT_INFO_UPDATED_EVENT,
+    createdAt = System.currentTimeMillis()
 )
 
-@DomainEvent(name = ADD_USER_EVENT)
-class UserAddedEvent(
+@DomainEvent(name = USER_LEFT_PROJECT_EVENT)
+class UserLeftProjectEvent(
     val projectId: UUID,
     val userId: UUID,
-    createdAt: Long = System.currentTimeMillis(),
 ) : Event<ProjectAggregate>(
-    name = ADD_USER_EVENT,
-    createdAt = createdAt,
+    name = USER_LEFT_PROJECT_EVENT,
+    createdAt = System.currentTimeMillis()
 )
 
-@DomainEvent(name = ADD_TASK_EVENT)
-class TaskAddedEvent(
+@DomainEvent(name = USER_JOINED_TO_PROJECT_EVENT)
+class UserJoinedToProjectEvent(
     val projectId: UUID,
-    val taskId: UUID,
-    createdAt: Long = System.currentTimeMillis(),
+    val userId: UUID,
 ) : Event<ProjectAggregate>(
-    name = ADD_TASK_EVENT,
-    createdAt = createdAt
+    name = USER_JOINED_TO_PROJECT_EVENT,
+    createdAt = System.currentTimeMillis()
 )
 
-@DomainEvent(name = TASK_DELETED_EVENT)
-class TaskDeletedEvent(
+@DomainEvent(name = TASK_STATUS_CREATED_EVENT)
+class TaskStatusCreatedEvent(
     val projectId: UUID,
-    val taskId: UUID,
-    createdAt: Long = System.currentTimeMillis(),
+    val taskStatusId: UUID,
+    val taskStatusName: String,
+    val color: String,
 ) : Event<ProjectAggregate>(
-    name = TASK_DELETED_EVENT,
-    createdAt = createdAt
+    name = TASK_STATUS_CREATED_EVENT,
+    createdAt = System.currentTimeMillis()
+)
+
+@DomainEvent(name = TASK_STATUS_DELETED_EVENT)
+class TaskStatusDeletedEvent(
+    val projectId: UUID,
+    val taskStatusId: UUID
+) : Event<ProjectAggregate>(
+    name = TASK_STATUS_DELETED_EVENT,
+    createdAt = System.currentTimeMillis()
 )

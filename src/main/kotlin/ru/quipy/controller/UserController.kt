@@ -1,29 +1,23 @@
 package ru.quipy.controller
 
 import org.springframework.web.bind.annotation.*
-import ru.quipy.api.UserAggregate
 import ru.quipy.api.UserCreatedEvent
-import ru.quipy.core.EventSourcingService
-import ru.quipy.logic.UserAggregateState
-import ru.quipy.logic.UserInfo
-import ru.quipy.logic.create
+import ru.quipy.logic.service.UserService
+import ru.quipy.logic.state.UserAggregateState
+import ru.quipy.logic.state.UserInfo
 import java.util.*
 
-
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 class UserController(
-    val userEsService: EventSourcingService<UUID, UserAggregate, UserAggregateState>
+    private val userService: UserService
 ) {
 
-    @PostMapping("/{nickName}")
-    fun createUser(@PathVariable nickName: String, @RequestBody userInfo: UserInfo): UserCreatedEvent {
-        return userEsService.create { it.create(UUID.randomUUID(), nickName, userInfo) }
+    @PostMapping
+    fun create(@RequestParam nickName: String, @RequestBody userInfo: UserInfo): UserCreatedEvent {
+        return userService.create(nickName, userInfo)
     }
 
-    @GetMapping("/{userID}")
-    fun getUser(@PathVariable userID: UUID) : UserAggregateState? {
-        return userEsService.getState(userID)
-    }
-
+    @GetMapping("/{userId}")
+    fun getUser(@PathVariable userId: UUID): UserAggregateState = userService.getUser(userId)
 }
