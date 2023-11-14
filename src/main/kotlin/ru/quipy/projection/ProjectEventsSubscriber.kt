@@ -1,4 +1,4 @@
-package ru.quipy.projections
+package ru.quipy.projection
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

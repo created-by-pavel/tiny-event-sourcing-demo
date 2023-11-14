@@ -13,8 +13,8 @@ class UserController(
     private val userService: UserService
 ) {
 
-    @PostMapping
-    fun create(@RequestParam nickName: String, @RequestBody userInfo: UserInfo): UserCreatedEvent {
+    @PostMapping("/{nickName}")
+    fun create(@PathVariable nickName: String, @RequestBody userInfo: UserInfo): UserCreatedEvent {
         return userService.create(nickName, userInfo)
     }
 
