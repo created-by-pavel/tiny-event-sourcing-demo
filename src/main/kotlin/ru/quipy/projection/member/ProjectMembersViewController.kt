@@ -9,12 +9,12 @@ import java.util.*
 @RestController
 @RequestMapping("/project-members-view")
 class ProjectMembersViewController(
-    val service: ProjectMembersViewService,
-    val userService: UserService) {
+    val projectService: MemberViewProjectService,
+    val userService: MemberViewUserService) {
 
     @GetMapping("/{projectId}")
     fun getProjectMembersByProjectId(@PathVariable projectId: UUID): ProjectMembersViewDto? {
-        val project = service.findProjectMembersByProjectId(projectId) ?: return null
+        val project = projectService.findProjectMembersByProjectId(projectId) ?: return null
         val users = userService.findUsersByIds(project.members)
         return ProjectMembersViewDto(
             projectId = projectId,

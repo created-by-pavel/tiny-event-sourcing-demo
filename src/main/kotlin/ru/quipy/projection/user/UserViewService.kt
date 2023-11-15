@@ -11,9 +11,9 @@ import java.util.*
 
 @Service
 @AggregateSubscriber(
-    aggregateClass = UserAggregate::class, subscriberName = "user-subs-stream"
+    aggregateClass = UserAggregate::class, subscriberName = "user-view-user-subs-stream"
 )
-class UserViewService (val userRepository: UserRepository) {
+class UserViewService (val userRepository: UserViewUserRepository) {
     val logger: Logger = LoggerFactory.getLogger(UserViewService::class.java)
 
     @SubscribeEvent

@@ -4,6 +4,6 @@ import org.springframework.data.mongodb.repository.MongoRepository
 import ru.quipy.projection.project.ProjectViewDomain
 import java.util.*
 
-interface TaskRepository : MongoRepository<ProjectViewDomain.Task, UUID> {
-    fun findAllByProjectId(projectId: UUID): List<ProjectViewDomain.Task>
+interface ProjectViewStatusRepository : MongoRepository<ProjectViewDomain.Status, UUID> {
+    fun findAllByProjectId(projectId: UUID): List<ProjectViewDomain.Status>
 }

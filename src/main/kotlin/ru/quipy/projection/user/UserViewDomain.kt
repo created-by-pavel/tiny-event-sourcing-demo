@@ -7,7 +7,7 @@ import ru.quipy.logic.state.UserInfo
 import java.util.UUID
 
 class UserViewDomain {
-    @Document(collection = "user-view")
+    @Document("user-view-users")
     data class User(
         @Id override val id: UUID,
         val createdAt: Long = System.currentTimeMillis(),

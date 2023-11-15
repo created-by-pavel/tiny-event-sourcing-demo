@@ -3,20 +3,22 @@ package ru.quipy.projection.member
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
-import ru.quipy.api.ProjectAggregate
-import ru.quipy.api.UserAggregate
-import ru.quipy.api.UserCreatedEvent
-import ru.quipy.api.UserJoinedToProjectEvent
-import ru.quipy.projection.member.repository.ProjectRepository
-import ru.quipy.projection.member.repository.UserRepository
+import ru.quipy.api.*
+import ru.quipy.projection.member.repository.MemberViewProjectRepository
+import ru.quipy.projection.member.repository.MemberViewUserRepository
 import ru.quipy.streams.annotation.AggregateSubscriber
 import ru.quipy.streams.annotation.SubscribeEvent
 import java.util.*
 
 @Service
-@AggregateSubscriber(aggregateClass = ProjectAggregate::class, subscriberName = "members-subs-stream")
-class ProjectMembersViewService (val projectRepository: ProjectRepository) {
-    val logger: Logger = LoggerFactory.getLogger(ProjectMembersViewService::class.java)
+@AggregateSubscriber(aggregateClass = ProjectAggregate::class, subscriberName = "members-project-subs-stream")
+class MemberViewProjectService (val projectRepository: MemberViewProjectRepository) {
+    val logger: Logger = LoggerFactory.getLogger(MemberViewProjectService::class.java)
+
+    @SubscribeEvent
+    fun projectCreatedSubscriber(event: ProjectCreatedEvent) {
+        projectRepository.save(ProjectMembersViewDomain.Project(event.projectId))
+    }
 
     @SubscribeEvent
     fun memberAddedSubscriber(event: UserJoinedToProjectEvent) {
@@ -34,9 +36,9 @@ class ProjectMembersViewService (val projectRepository: ProjectRepository) {
 }
 
 @Service
-@AggregateSubscriber(aggregateClass = UserAggregate::class, subscriberName = "members-subs-stream")
-class UserService (val userRepository: UserRepository) {
-    val logger: Logger = LoggerFactory.getLogger(UserService::class.java)
+@AggregateSubscriber(aggregateClass = UserAggregate::class, subscriberName = "members-user-subs-stream")
+class MemberViewUserService (val userRepository: MemberViewUserRepository) {
+    val logger: Logger = LoggerFactory.getLogger(MemberViewUserService::class.java)
 
     @SubscribeEvent
     fun userAddedSubscriber(event: UserCreatedEvent) {

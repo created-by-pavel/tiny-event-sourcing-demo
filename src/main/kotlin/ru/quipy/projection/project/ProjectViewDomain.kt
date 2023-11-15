@@ -6,7 +6,7 @@ import ru.quipy.domain.Unique
 import java.util.*
 
 class ProjectViewDomain {
-    @Document(collection = "project-view")
+    @Document(collection = "project-view-projects")
     data class Project(
         @Id
         override val id: UUID,
@@ -16,7 +16,7 @@ class ProjectViewDomain {
         val members: MutableSet<UUID> = mutableSetOf()
     ) : Unique<UUID>
 
-    @Document(collection = "project-view")
+    @Document(collection = "project-view-statuses")
     data class Status(
         @Id
         override val id: UUID,
@@ -25,7 +25,7 @@ class ProjectViewDomain {
         var color: String
     ) : Unique<UUID>
 
-    @Document(collection = "project-view")
+    @Document(collection = "project-view-tasks")
     data class Task(
         @Id
         override var id: UUID,

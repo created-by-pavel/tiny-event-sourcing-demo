@@ -11,8 +11,8 @@ import ru.quipy.core.EventSourcingServiceFactory
 import ru.quipy.logic.state.ProjectAggregateState
 import ru.quipy.logic.state.TaskAggregateState
 import ru.quipy.logic.state.UserAggregateState
-import ru.quipy.projection.member.ProjectMembersViewService
-import ru.quipy.projection.member.UserService
+import ru.quipy.projection.member.MemberViewProjectService
+import ru.quipy.projection.member.MemberViewUserService
 import ru.quipy.projection.project.ProjectService
 import ru.quipy.projection.project.StatusService
 import ru.quipy.projection.project.TaskService
@@ -60,10 +60,10 @@ class EventSourcingLibConfiguration {
     private lateinit var projectViewStatusEventSubscriber: StatusService
 
     @Autowired
-    private lateinit var projectMembersViewService: ProjectMembersViewService
+    private lateinit var projectMembersViewService: MemberViewProjectService
 
     @Autowired
-    private lateinit var userMembersViewService: UserService
+    private lateinit var userMembersViewService: MemberViewUserService
 
     @Autowired
     private lateinit var userEventSubscriber: UserViewService

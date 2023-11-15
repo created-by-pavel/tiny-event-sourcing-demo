@@ -2,18 +2,18 @@ package ru.quipy.projection.project
 
 import org.springframework.stereotype.Service
 import ru.quipy.api.*
-import ru.quipy.projection.project.repository.ProjectRepository
-import ru.quipy.projection.project.repository.StatusRepository
-import ru.quipy.projection.project.repository.TaskRepository
+import ru.quipy.projection.project.repository.ProjectViewProjectRepository
+import ru.quipy.projection.project.repository.ProjectViewStatusRepository
+import ru.quipy.projection.project.repository.ProjectViewTaskRepository
 import ru.quipy.streams.annotation.AggregateSubscriber
 import ru.quipy.streams.annotation.SubscribeEvent
 import java.util.UUID
 
-@Service
+@Service("ProjectViewProjectService")
 @AggregateSubscriber(
-    aggregateClass = ProjectAggregate::class, subscriberName = "project-view-subs-stream"
+    aggregateClass = ProjectAggregate::class, subscriberName = "project-view-project-subs-stream"
 )
-class ProjectService(val projectRepository: ProjectRepository) {
+class ProjectService(val projectRepository: ProjectViewProjectRepository) {
 
     @SubscribeEvent
     fun projectCreatedSubscriber(event: ProjectCreatedEvent) {
@@ -75,11 +75,11 @@ class ProjectService(val projectRepository: ProjectRepository) {
     }
 }
 
-@Service
+@Service("ProjectViewTaskService")
 @AggregateSubscriber(
-    aggregateClass = TaskAggregate::class, subscriberName = "project-view-subs-stream"
+    aggregateClass = TaskAggregate::class, subscriberName = "project-view-task-subs-stream"
 )
-class TaskService(val taskRepository: TaskRepository) {
+class TaskService(val taskRepository: ProjectViewTaskRepository) {
 
     @SubscribeEvent
     fun taskCreatedSubscriber(event: TaskCreatedEvent) {
@@ -129,11 +129,11 @@ class TaskService(val taskRepository: TaskRepository) {
     }
 }
 
-@Service
+@Service("ProjectViewStatusService")
 @AggregateSubscriber(
-    aggregateClass = ProjectAggregate::class, subscriberName = "project-status-view-subs-stream"
+    aggregateClass = ProjectAggregate::class, subscriberName = "project-view-status-subs-stream"
 )
-class StatusService(val statusRepository: StatusRepository) {
+class StatusService(val statusRepository: ProjectViewStatusRepository) {
 
     @SubscribeEvent
     fun statusCreatedSubscriber(event: TaskStatusCreatedEvent) {
